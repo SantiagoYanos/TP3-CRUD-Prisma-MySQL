@@ -1,0 +1,44 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User{
+    id Int @id @default(autoincrement())
+    name String //Por defecto es NOT NULL
+    email String @unique
+    age Int
+    createdAt DateTime @default(now())
+    country String
+    posts Post[]
+    rol Role @default(USER)
+}
+
+model Post{
+  id Int @id @default(autoincrement())
+  title String?
+  content String
+  createdAt DateTime @default(now())
+  published Boolean @default(false)
+  categories Category[]
+  authorId Int
+  author User @relation(fields: [authorId], references: [id]) //Cada post va a tener un autor de tipo usuario y el authorId va a referenciar a la id del Usuario.
+}
+
+model Category{
+  id Int @id @default(autoincrement())
+  name String
+  posts Post[]
+}
+
+enum Role {
+  USER
+  ADMIN
+}
