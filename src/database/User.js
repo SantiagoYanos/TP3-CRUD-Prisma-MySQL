@@ -1,5 +1,4 @@
 const {PrismaClient} = require('@prisma/client')
-
 const prisma = new PrismaClient()
 
 const getAllUsers = async ()=>{
@@ -32,7 +31,46 @@ const createNewUser = async (newUser)=>{
     }   
 }
 
+const deleteUser = async (User) => {
+    try
+    {
+    
+        const deleteUser = await prisma.user.delete({
+            where: {
+              id : Number(User),
+            },
+          })
+          
+        return deleteUser
+    } 
+    catch (error) {
+        console.log(error)
+    }
+} 
+
+
+const updateUser = async (User , newData) => {
+    try
+    {
+    
+        const updateUser = await prisma.user.update({
+            where: {
+              id : Number(User),
+            },
+            data : newData
+          })
+          
+        return updateUser
+    } 
+    catch (error) {
+        console.log(error)
+    }
+}
+
+
 module.exports={
     getAllUsers,
-    createNewUser
+    createNewUser,
+    deleteUser, 
+    updateUser
 }

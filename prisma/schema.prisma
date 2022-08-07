@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -10,35 +7,42 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User{
-    id Int @id @default(autoincrement())
-    name String //Por defecto es NOT NULL
-    email String @unique
-    age Int
-    createdAt DateTime @default(now())
-    country String
-    posts Post[]
-    rol Role @default(USER)
+model categorytopost {
+  A Int
+  B Int
+
+  @@unique([A, B], map: "_CategoryToPost_AB_unique")
+  @@index([B], map: "_CategoryToPost_B_index")
+  @@map("_categorytopost")
 }
 
-model Post{
-  id Int @id @default(autoincrement())
-  title String?
-  content String
-  createdAt DateTime @default(now())
-  published Boolean @default(false)
-  categories Category[]
-  authorId Int
-  author User @relation(fields: [authorId], references: [id]) //Cada post va a tener un autor de tipo usuario y el authorId va a referenciar a la id del Usuario.
-}
-
-model Category{
-  id Int @id @default(autoincrement())
+model category {
+  id   Int    @id @default(autoincrement())
   name String
-  posts Post[]
 }
 
-enum Role {
+model post {
+  id        Int      @id @default(autoincrement())
+  title     String?
+  content   String
+  createdAt DateTime @default(now())
+  published Boolean  @default(false)
+  authorId  Int
+
+  @@index([authorId], map: "Post_authorId_fkey")
+}
+
+model user {
+  id        Int       @id @default(autoincrement())
+  name      String
+  email     String    @unique(map: "User_email_key")
+  age       Int
+  createdAt DateTime  @default(now())
+  country   String
+  role      user_role @default(USER)
+}
+
+enum user_role {
   USER
   ADMIN
 }

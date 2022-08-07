@@ -3,6 +3,7 @@ const app = express()
 
 const probandoRouter = require("./routes/probando")
 const userRouter = require('./v1/routes/userRoute.js')
+const postRouter = require('./v1/routes/postRoute.js')
 
 
 //Variables
@@ -17,6 +18,7 @@ app.get('/', (req,res)=>{
 app.use("/probando" , probandoRouter)
 
 app.use('/api/v1/users', userRouter)
+app.use('/api/v1/posts' , postRouter)
 
 
 app.listen(PORT , () => {

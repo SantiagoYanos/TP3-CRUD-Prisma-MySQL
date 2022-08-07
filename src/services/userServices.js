@@ -13,7 +13,20 @@ const createNewUser = (newUser) => {
     return created
 }
 
+const deleteUser = (User) => {
+
+    const deleteUser = user.deleteUser(User)
+    return deleteUser
+}
+
+const updateUser = (User, newData) => {
+    const updateUser = user.updateUser(User,newData)
+    return updateUser
+}
+
 module.exports={
     getAllUsers,
-    createNewUser
+    createNewUser, 
+    deleteUser, 
+    updateUser
 }
