@@ -4,71 +4,12 @@ const { Prisma } = require('@prisma/client')
 
 const { isNumber } = require('../regex/regex.js')
 
-
-
-const deleteUser = async (req, res) => {
-    const { id } = req.params
-
-    if (!isNumber.test(id)) {
-
-        const deleteUser = await userServices.deleteUser(id)
-
-        //console.log(deleteUser)
-
-        if (deleteUser === undefined) {
-            res.status(400).send(`ERROR: Al obtener usuarios de la base de datos`)
-        }
-        else {
-            res.status(200).json({ message: "Usuario borrado con éxito!" })
-        }
-    }
-
-
-
-}
-
-const updateUser = async (req, res) => {
-
-    const { id } = req.params
-    const newData = req.body
-
-    //console.log(newData)
-
-    if (!isNumber.test(id)) {
-        return res.status(400).send('Error: Faltan datos!!')
-    }
-    else {
-        const updateUser = await userServices.updateUser(id, newData)
-        console.log(updateUser)
-
-        if (deleteUser === undefined) {
-            res.status(400).send(`ERROR al encontrar el usuario deseado`)
-        }
-        else {
-            res.status(200).json({ message: "Usuario actualizado con éxito!" })
-        }
-    }
-}
-
-const getAllUsers = async (req, res) => {
-
-    const obtained = await userServices.getAllUsers()
-    console.log(obtained)
-    if (obtained === undefined) {
-        res.status(400).send(`ERROR: Al obtener usuarios de la base de datos`)
-    }
-    else {
-        res.status(200).json({ message: "Usuarios obtenidos con éxito!", data: obtained })
-    }
-}
-
-
 const createNewUser = async (req, res) => {
 
     const { name, email, age, country, rol } = req.body
 
     if (!name || !email || !isNumber.test(String(age)) || !country) {
-        return res.status(400).send('Error: Faltan datos!!')
+        res.status(400).json({message: 'ERROR: Faltan Datos!!'})
     }
     else {
         const newUser = {
@@ -88,7 +29,7 @@ const createNewUser = async (req, res) => {
         console.log(added)
 
         if (added === undefined) {
-            res.status(400).send(`ERROR: Al agregar un usuario a la base de datos`)
+            res.status(400).json({message: `ERROR: Al agregar un usuario a la base de datos`})
         }
         else {
             res.status(202).json({ message: "Usuario creado correctamente!!", data: added })
@@ -96,9 +37,67 @@ const createNewUser = async (req, res) => {
     }
 }
 
+const getAllUsers = async (req, res) => {
+
+    const obtained = await userServices.getAllUsers()
+
+    //console.log(obtained)
+
+    if (obtained === undefined) {
+        res.status(400).json({message: `ERROR: Al obtener usuarios de la base de datos`})
+    }
+    else {
+        res.status(200).json({ message: "Usuarios obtenidos con éxito!", data: obtained })
+    }
+}
+
+const updateUser = async (req, res) => {
+
+    const { id } = req.params
+    const newData = req.body
+
+    //console.log(newData)
+
+    if (!isNumber.test(id)) {
+        res.status(400).json({message: 'ERROR: Faltan Datos!!'})
+    }
+    else {
+        const updateUser = await userServices.updateUser(id, newData)
+        console.log(updateUser)
+
+        if (deleteUser === undefined) {
+            res.status(400).json({message: `ERROR: Al editar un usuario de la base de datos`})
+        }
+        else {
+            res.status(200).json({ message: "Usuario actualizado con éxito!" })
+        }
+    }
+}
+
+const deleteUser = async (req, res) => {
+    const { id } = req.params
+
+    if (!isNumber.test(id)) {
+        res.status(400).json({message: 'ERROR: Faltan Datos!!'})
+    }
+    else
+    {
+        const deleteUser = await userServices.deleteUser(id)
+
+        //console.log(deleteUser)
+
+        if (deleteUser === undefined) {
+            res.status(400).json({message: `ERROR: Al eliminar un usuario de la base de datos`})
+        }
+        else {
+            res.status(200).json({ message: "Usuario borrado con éxito!" })
+        }
+    }
+}
+
 module.exports = {
-    getAllUsers,
     createNewUser,
-    deleteUser,
-    updateUser
+    getAllUsers,
+    updateUser,
+    deleteUser
 }

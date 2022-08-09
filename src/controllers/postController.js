@@ -3,21 +3,6 @@ const {Prisma} = require('@prisma/client')
 
 const {isNumber} = require('../regex/regex.js')
 
-const getAllPost = async (req,res) => {
-
-    const obtained = await postServices.getAllPost()
-    console.log(obtained)
-    if(obtained===undefined)
-    {
-        res.status(400).send(`ERROR al obtener los post de la base de datos`)
-    }
-    else
-    {
-        res.status(200).json({message:"Post obtenidos con éxito!", data: obtained})
-    }
-}
-
-
 /*
 id        Int      @id @default(autoincrement())
   title     String?
@@ -27,12 +12,11 @@ id        Int      @id @default(autoincrement())
   authorId  Int
 */
 
-
 const createNewPost = async (req,res) => {
     const {title,content, authorId} = req.body
 
     if(!title || !content || !authorId){
-        return res.status(400).send('Error: Faltan datos!!')
+        res.status(400).json({message: 'ERROR: Faltan Datos!!'})
     }else {
         const newPost = {
             title,
@@ -45,12 +29,26 @@ const createNewPost = async (req,res) => {
 
         if(added === undefined)
         {
-            res.status(400).send(`ERROR: Al agregar un post a la base de datos`)
+            res.status(400).json({message: `ERROR: Al agregar un post a la base de datos`})
         }
         else
         {
             res.status(202).json({message:"Post creado correctamente!!", data: added})
         }
+    }
+}
+
+const getAllPost = async (req,res) => {
+
+    const obtained = await postServices.getAllPost()
+    console.log(obtained)
+    if(obtained===undefined)
+    {
+        res.status(400).json({message: `ERROR: Al obtener los posts de la base de datos`})
+    }
+    else
+    {
+        res.status(200).json({message:"Post obtenidos con éxito!", data: obtained})
     }
 }
 
@@ -61,7 +59,7 @@ const updatePost = async (req,res) => {
     const newData = req.body
 
     if(!isNumber.test(String(id))){
-        return res.status(400).send('Error: Faltan datos!!')
+        res.status(400).json({message: 'ERROR: Faltan Datos!!'})
     }
     else
     {
@@ -69,14 +67,13 @@ const updatePost = async (req,res) => {
 
         if(edited === undefined)
         {
-            res.status(400).send(`ERROR: Al editar un post de la base de datos`)
+            res.status(400).json({message: `ERROR: Al editar un post de la base de datos`})
         }
         else
         {
             res.status(202).json({message:"Post editado correctamente!!", data: edited})
         }
     }
-
 }
 
 const deletePost = async (req,res) => {
@@ -85,7 +82,7 @@ const deletePost = async (req,res) => {
 
     if(!isNumber.test(String(id)))
     {
-        return res.status(400).send('Error: Faltan datos!!')
+        res.status(400).json({message: 'ERROR: Faltan Datos!!'})
     }
     else
     {
@@ -93,7 +90,7 @@ const deletePost = async (req,res) => {
 
         if(deleted===undefined)
         {
-            res.status(400).send(`ERROR: Al eliminar un post de la base de datos`)
+            res.status(400).json({message: `ERROR: Al eliminar un post de la base de datos`})
         }
         else
         {
@@ -104,8 +101,8 @@ const deletePost = async (req,res) => {
 }
 
 module.exports={
-    getAllPost,
     createNewPost,
+    getAllPost,
     updatePost,
     deletePost
 }
