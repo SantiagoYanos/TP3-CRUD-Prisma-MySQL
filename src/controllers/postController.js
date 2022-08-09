@@ -13,16 +13,17 @@ id        Int      @id @default(autoincrement())
 */
 
 const createNewPost = async (req,res) => {
-    const {title,content, authorId} = req.body
+    const {title,content, authorId, categoryId} = req.body
 
-    if(!title || !content || !authorId){
+    if(!title || !content || !authorId || !categoryId){
         res.status(400).json({message: 'ERROR: Faltan Datos!!'})
     }else {
         const newPost = {
             title,
             content,
-            authorId
-        }
+            authorId,
+            categoryId
+        }  
 
         const added = await postServices.createNewPost(newPost)
         console.log(added)

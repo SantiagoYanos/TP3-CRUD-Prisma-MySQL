@@ -19,6 +19,7 @@ model categorytopost {
 model category {
   id   Int    @id @default(autoincrement())
   name String
+  posts post[]
 }
 
 model post {
@@ -28,6 +29,9 @@ model post {
   createdAt DateTime @default(now())
   published Boolean  @default(false)
   authorId  Int
+  author user @relation(fields: [authorId], references: [id])
+  categoryId Int
+  category category @relation(fields: [categoryId], references: [id])
 
   @@index([authorId], map: "Post_authorId_fkey")
 }
@@ -40,6 +44,7 @@ model user {
   createdAt DateTime  @default(now())
   country   String
   role      user_role @default(USER)
+  posts post[]
 }
 
 enum user_role {
