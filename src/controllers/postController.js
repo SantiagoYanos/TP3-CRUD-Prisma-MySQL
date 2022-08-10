@@ -59,7 +59,7 @@ const updatePost = async (req,res) => {
 
     const newData = req.body
 
-    if(!isNumber.test(String(id))){
+    if(!isNumber.test(id)){
         res.status(400).json({message: 'ERROR: Faltan Datos!!'})
     }
     else

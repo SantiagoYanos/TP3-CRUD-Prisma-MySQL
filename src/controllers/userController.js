@@ -51,12 +51,32 @@ const getAllUsers = async (req, res) => {
     }
 }
 
+const getOneUser = async (req,res) => {
+    const id = req.params.id
+    
+    if(!isNumber.test(id))
+    {
+        res.status(400).json({message: 'ERROR: Faltan Datos!!'})
+    }
+    else
+    {
+        const obtained = await userServices.getOneUser(Number(id))
+        
+        if(obtained!==undefined)
+        {
+            res.status(202).json({message: 'Usuario obtenido con éxito!', data:obtained})
+        }
+        else
+        {
+            res.status(400).json({message: 'ERROR: Al obtener un usuario en la base de datos'})
+        }
+    }
+}
+
 const updateUser = async (req, res) => {
 
     const { id } = req.params
     const newData = req.body
-
-    //console.log(newData)
 
     if (!isNumber.test(id)) {
         res.status(400).json({message: 'ERROR: Faltan Datos!!'})
@@ -98,6 +118,7 @@ const deleteUser = async (req, res) => {
 module.exports = {
     createNewUser,
     getAllUsers,
+    getOneUser,
     updateUser,
     deleteUser
 }

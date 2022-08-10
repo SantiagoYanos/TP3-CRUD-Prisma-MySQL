@@ -15,6 +15,26 @@ const getAllUsers = async ()=>{
     
 }
 
+const getOneUser = async (userId)=>{
+
+    try{
+        const user = await prisma.user.findUnique({
+            where: {
+                id: userId
+            },
+            include: {
+                posts: true
+            }
+        })
+
+        return user
+    }
+    catch(err)
+    {
+        console.log(err)
+    }
+}
+
 const createNewUser = async (newUser)=>{
     try
     {
@@ -70,6 +90,7 @@ const updateUser = async (User , newData) => {
 
 module.exports={
     getAllUsers,
+    getOneUser,
     createNewUser,
     deleteUser, 
     updateUser

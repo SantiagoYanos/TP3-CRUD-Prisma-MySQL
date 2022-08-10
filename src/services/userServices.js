@@ -7,6 +7,11 @@ const getAllUsers = () => {
     return obtained
 }
 
+const getOneUser = (userId) => {
+    const obtained = user.getOneUser(userId)
+    return obtained
+}
+
 const createNewUser = (newUser) => {
     const created = user.createNewUser(newUser)
 
@@ -26,6 +31,7 @@ const updateUser = (User, newData) => {
 
 module.exports={
     getAllUsers,
+    getOneUser,
     createNewUser, 
     deleteUser, 
     updateUser
