@@ -28,10 +28,17 @@ function deleteCategory(idCategory)
     return deleted
 }
 
+function getOneCategory(idCategory){
+    const getCategory = category.getOneCategory(idCategory)
+
+    return getCategory
+}
+
 module.exports={
     createNewCategory,
     readCategories,
     updateCategory,
-    deleteCategory
+    deleteCategory,
+    getOneCategory
 }
 

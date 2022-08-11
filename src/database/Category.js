@@ -63,9 +63,31 @@ function deleteCategory(idCategory)
     }
 }
 
+const getOneCategory = async (idCategory)=>{
+
+    try{
+        const oneCategory = await prisma.category.findUnique({
+            where: {
+                id: idCategory
+            },
+            include: {
+                posts: true
+                
+            }
+        })
+
+        return oneCategory
+    }
+    catch(err)
+    {
+        console.log(err)
+    }
+}
+
 module.exports={
     createNewCategory,
     readCategories,
     updateCategory,
-    deleteCategory
+    deleteCategory,
+    getOneCategory
 }

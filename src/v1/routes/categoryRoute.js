@@ -8,5 +8,6 @@ router
     .get('/', categoryController.readCategories)
     .put('/:id', categoryController.updateCategory)
     .delete('/:id', categoryController.deleteCategory)
+    .get('/:id' , categoryController.getOneCategory)
 
 module.exports=router

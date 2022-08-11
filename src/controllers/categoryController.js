@@ -95,9 +95,26 @@ const deleteCategory = async (req,res)=>
     }
 }
 
+const getOneCategory = async (req,res) => {
+    const id = req.params.id
+
+    const obtained = await categoryServices.getOneCategory(Number(id))
+
+    if(obtained!==undefined)
+    {
+        res.status(202).json({message:'Se obtuvo las categoria correctamente', data: obtained})
+    }
+    else
+    {
+        res.status(400).json({message:'ERROR: Al obtener la categoria en la base de datos'})
+    }
+
+}
+
 module.exports={
     createNewCategory,
     readCategories,
     updateCategory,
-    deleteCategory
+    deleteCategory,
+    getOneCategory
 }
