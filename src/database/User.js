@@ -72,7 +72,6 @@ const deleteUser = async (User) => {
 const updateUser = async (User , newData) => {
     try
     {
-    
         const updateUser = await prisma.user.update({
             where: {
               id : Number(User),
