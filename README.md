@@ -122,7 +122,7 @@ _Example_
 }
 ```
 -----------------------
-###Posts
+### Posts
 
 ```
 http://host/api/v1/posts/ //Ruta de Posts (CRUD)
@@ -206,7 +206,7 @@ _Example_
 }
 ```
 ********************
-###Categories 
+### Categories 
 ```
 http://host/api/v1/categories/ //Ruta de Categorías (CRUD)
 ```
