@@ -71,7 +71,17 @@ const getOneCategory = async (idCategory)=>{
                 id: idCategory
             },
             include: {
-                posts: true
+                //posts: true
+                posts: {
+                    select : {
+                        id : true, 
+                        title : true ,
+                        content : true , 
+                        createdAt : true , 
+                        published : true , 
+                        categoryId : true
+                    }
+                }
                 
             }
         })
