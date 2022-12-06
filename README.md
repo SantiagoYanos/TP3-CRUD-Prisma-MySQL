@@ -305,7 +305,8 @@ _Example_
 
 ## Environment Variables
 
-```json
+`Ex: mysql://root:password@localhost:port/dbName`
+
+```
 DATABASE_URL="protocol//[hosts][/database][?properties]"
-//Ex: mysql://root:password@localhost:port/dbName
 ```
