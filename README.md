@@ -1,6 +1,17 @@
 # TP 3: CRUD + Prisma (MySQL)
 
-Servidor de Usuarios (User) y Posts (Post) con Categorías (Category).
+*Objetivo*: Servidor de Usuarios (User) y Posts (Post) con Categorías (Category).
+
+## Grupo
+
+- Ramiro Lewin
+- Santiago Yanosky
+
+## Stack
+
+- Node.js
+- Express
+- Prisma (MySQL)
 
 ## Routes
 
@@ -294,6 +305,7 @@ _Example_
 
 ## Environment Variables
 
-```
+```json
 DATABASE_URL="protocol//[hosts][/database][?properties]"
+//Ex: mysql://root:password@localhost:port/dbName
 ```
